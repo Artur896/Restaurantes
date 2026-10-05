@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #15120F;
+  color: #F6F1E7;
+  overscroll-behavior-y: none;
+}
+
+::selection {
+  background-color: #C6A15B;
+  color: #15120F;
+}
+
+/* Hide scrollbar for horizontally scrolling chip rows / carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bg-grain {
+  background-image: radial-gradient(circle at 1px 1px, rgba(246,241,231,0.035) 1px, transparent 0);
+  background-size: 3px 3px;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(120deg, #D8BE8B, #C6A15B 40%, #F0DDAF 60%, #C6A15B);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass {
+  background: rgba(21, 18, 15, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.card-premium {
+  background: linear-gradient(165deg, rgba(246,241,231,0.06), rgba(246,241,231,0.02));
+  border: 1px solid rgba(246,241,231,0.08);
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}

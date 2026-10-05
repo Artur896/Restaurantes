@@ -1,0 +1,210 @@
+// Esquema de base de datos propuesto para Bistró Mecha — Plataforma Digital de Experiencia.
+// Motor objetivo: PostgreSQL. Este esquema es la base para la siguiente fase (backend real);
+// por ahora el frontend consume datos demo en memoria (ver src/lib/demo-data.ts).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Rol {
+  ADMINISTRADOR
+  GERENTE
+  MESERO
+  COCINA
+  CLIENTE
+}
+
+enum EstadoMesa {
+  DISPONIBLE
+  RESERVADA
+  OCUPADA
+  POR_LIMPIAR
+  BLOQUEADA
+}
+
+enum EstadoReservacion {
+  CONFIRMADA
+  PENDIENTE
+  EN_MESA
+  FINALIZADA
+  CANCELADA
+}
+
+enum EstadoEvento {
+  PUBLICADO
+  BORRADOR
+  PROGRAMADO
+}
+
+enum EstadoPedido {
+  NUEVO
+  EN_PREPARACION
+  LISTO
+  ENTREGADO
+  CANCELADO
+}
+
+model Sucursal {
+  id            String         @id @default(cuid())
+  nombre        String
+  direccion     String
+  ciudad        String
+  telefono      String
+  whatsapp      String
+  horario       String
+  lat           Float
+  lng           Float
+  mesas         Mesa[]
+  platillos     Platillo[]
+  eventos       Evento[]
+  reservaciones Reservacion[]
+  usuarios      Usuario[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Usuario {
+  id           String    @id @default(cuid())
+  nombre       String
+  correo       String    @unique
+  passwordHash String
+  rol          Rol       @default(CLIENTE)
+  sucursal     Sucursal? @relation(fields: [sucursalId], references: [id])
+  sucursalId   String?
+  cliente      Cliente?
+  createdAt    DateTime  @default(now())
+}
+
+model Cliente {
+  id             String        @id @default(cuid())
+  usuario        Usuario?      @relation(fields: [usuarioId], references: [id])
+  usuarioId      String?       @unique
+  nombre         String
+  telefono       String
+  correo         String        @unique
+  visitas        Int           @default(0)
+  favoritos      Platillo[]    @relation("ClienteFavoritos")
+  reservaciones  Reservacion[]
+  createdAt      DateTime      @default(now())
+}
+
+model Mesa {
+  id             String        @id @default(cuid())
+  numero         Int
+  zona           String
+  capacidad      Int
+  estado         EstadoMesa    @default(DISPONIBLE)
+  qrToken        String        @unique @default(cuid())
+  sucursal       Sucursal      @relation(fields: [sucursalId], references: [id])
+  sucursalId     String
+  x              Float         @default(0)
+  y              Float         @default(0)
+  reservaciones  Reservacion[]
+  pedidos        Pedido[]
+  solicitudes    Solicitud[]
+
+  @@unique([sucursalId, numero])
+}
+
+model Platillo {
+  id            String     @id @default(cuid())
+  nombre        String
+  descripcion   String
+  ingredientes  String[]
+  precio        Int
+  categoria     String
+  imagen        String
+  etiquetas     String[]
+  disponible    Boolean    @default(true)
+  sucursales    Sucursal[]
+  favoritoDe    Cliente[]  @relation("ClienteFavoritos")
+  pedidoItems   PedidoItem[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model Evento {
+  id            String        @id @default(cuid())
+  nombre        String
+  fecha         DateTime
+  hora          String
+  horaFin       String
+  descripcion   String
+  artista       String
+  imagen        String
+  tipo          String
+  capacidad     Int
+  confirmados   Int           @default(0)
+  estado        EstadoEvento  @default(BORRADOR)
+  sucursal      Sucursal      @relation(fields: [sucursalId], references: [id])
+  sucursalId    String
+  reservaciones Reservacion[]
+}
+
+model Reservacion {
+  id           String            @id @default(cuid())
+  nombre       String
+  telefono     String
+  correo       String
+  fecha        DateTime
+  hora         String
+  personas     Int
+  ocasion      String
+  zona         String
+  comentarios  String?
+  codigo       String            @unique
+  estado       EstadoReservacion @default(PENDIENTE)
+  sucursal     Sucursal          @relation(fields: [sucursalId], references: [id])
+  sucursalId   String
+  mesa         Mesa?             @relation(fields: [mesaId], references: [id])
+  mesaId       String?
+  evento       Evento?           @relation(fields: [eventoId], references: [id])
+  eventoId     String?
+  cliente      Cliente?          @relation(fields: [clienteId], references: [id])
+  clienteId    String?
+  createdAt    DateTime          @default(now())
+}
+
+model Pedido {
+  id         String       @id @default(cuid())
+  mesa       Mesa         @relation(fields: [mesaId], references: [id])
+  mesaId     String
+  items      PedidoItem[]
+  estado     EstadoPedido @default(NUEVO)
+  propina    Int          @default(0)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model PedidoItem {
+  id         String   @id @default(cuid())
+  pedido     Pedido   @relation(fields: [pedidoId], references: [id])
+  pedidoId   String
+  platillo   Platillo @relation(fields: [platilloId], references: [id])
+  platilloId String
+  cantidad   Int      @default(1)
+  precio     Int
+}
+
+model Solicitud {
+  id        String   @id @default(cuid())
+  mesa      Mesa     @relation(fields: [mesaId], references: [id])
+  mesaId    String
+  tipo      String
+  atendida  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Notificacion {
+  id        String   @id @default(cuid())
+  tipo      String
+  titulo    String
+  mensaje   String
+  leida     Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
