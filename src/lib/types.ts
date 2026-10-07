@@ -8,6 +8,12 @@ export type Sucursal = {
   horario: string;
   lat: number;
   lng: number;
+  /** Frase corta tipo "El corazón del Centro Histórico de Toluca". */
+  descriptor?: string;
+  /** Párrafo breve describiendo la experiencia de esa sucursal. */
+  resumen?: string;
+  /** Para qué tipo de visita es ideal, p. ej. "Celebraciones, reuniones y música en vivo". */
+  idealPara?: string;
 };
 
 export type CategoriaMenu =

@@ -12,12 +12,20 @@ type HelpRequestType =
   | "Cambiar mesa"
   | "Otra cosa";
 
+export const MESA_HOLD_DURATION_MS = 5 * 60 * 1000;
+
+type MesaHold = {
+  mesaId: string;
+  expiresAt: number;
+} | null;
+
 type AppState = {
   mesaId: string | null;
   carrito: ItemCuenta[];
   favoritos: string[];
   cuentaSolicitada: boolean;
   ultimaSolicitud: HelpRequestType | null;
+  mesaHold: MesaHold;
 };
 
 type AppContextType = AppState & {
@@ -30,9 +38,12 @@ type AppContextType = AppState & {
   esFavorito: (platilloId: string) => boolean;
   solicitarCuenta: () => void;
   solicitarAyuda: (tipo: HelpRequestType) => void;
+  iniciarHoldMesa: (mesaId: string) => void;
+  liberarHoldMesa: () => void;
   totalCarrito: number;
   itemsCount: number;
   mesaInfo: (typeof MESAS)[number] | undefined;
+  hydrated: boolean;
 };
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -46,18 +57,37 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     favoritos: [],
     cuentaSolicitada: false,
     ultimaSolicitud: null,
+    mesaHold: null,
   });
   const [hydrated, setHydrated] = useState(false);
+  const [, forceTick] = useState(0);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setState(JSON.parse(raw));
+      if (raw) setState((s) => ({ ...s, ...JSON.parse(raw) }));
     } catch {
       // ignore
     }
     setHydrated(true);
   }, []);
+
+  // Keep the 5-minute table hold ticking (and auto-release it) even if the
+  // user navigates between screens or refreshes — expiresAt is the source of
+  // truth, this effect just re-renders dependents every second.
+  useEffect(() => {
+    if (!state.mesaHold) return;
+    const id = setInterval(() => {
+      forceTick((t) => t + 1);
+      setState((s) => {
+        if (s.mesaHold && s.mesaHold.expiresAt <= Date.now()) {
+          return { ...s, mesaHold: null };
+        }
+        return s;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [state.mesaHold]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -129,6 +159,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState((s) => ({ ...s, ultimaSolicitud: tipo }));
   }, []);
 
+  const iniciarHoldMesa = useCallback((mesaId: string) => {
+    setState((s) => ({ ...s, mesaHold: { mesaId, expiresAt: Date.now() + MESA_HOLD_DURATION_MS } }));
+  }, []);
+
+  const liberarHoldMesa = useCallback(() => {
+    setState((s) => ({ ...s, mesaHold: null }));
+  }, []);
+
   const totalCarrito = useMemo(
     () => state.carrito.reduce((acc, i) => acc + i.precio * i.cantidad, 0),
     [state.carrito]
@@ -147,9 +185,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     esFavorito,
     solicitarCuenta,
     solicitarAyuda,
+    iniciarHoldMesa,
+    liberarHoldMesa,
     totalCarrito,
     itemsCount,
     mesaInfo,
+    hydrated,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

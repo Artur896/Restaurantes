@@ -37,15 +37,15 @@ export default function CuentaPage() {
         <motion.span
           initial={{ scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/15"
+          className="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/12"
         >
-          <CheckCircle2 size={36} className="text-emerald-400" />
+          <CheckCircle2 size={36} className="text-emerald-600" />
         </motion.span>
-        <h1 className="mt-5 font-serif text-3xl text-cream">¡Gracias por tu visita!</h1>
-        <p className="mt-2 text-sm text-cream/55">
+        <h1 className="mt-5 font-serif text-3xl text-graphite">¡Gracias por tu visita!</h1>
+        <p className="mt-2 text-sm text-graphite/50">
           Tu pago de {formatCurrency(total)} fue procesado. Esperamos verte pronto en Bistró Mecha.
         </p>
-        <Link href="/" className="mt-6 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-carbon">
+        <Link href="/" className="mt-6 rounded-full bg-graphite px-6 py-3 text-sm font-semibold text-ivory">
           Volver al inicio
         </Link>
       </div>
@@ -54,46 +54,43 @@ export default function CuentaPage() {
 
   return (
     <div className="mx-auto max-w-xl px-5 pb-28 pt-10 sm:px-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Mesa {mesa.numero}</p>
-      <h1 className="mt-1 font-serif text-4xl text-cream">Tu cuenta</h1>
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-champagne">Mesa {mesa.numero}</p>
+      <h1 className="mt-1 font-serif text-4xl text-graphite">Tu cuenta</h1>
 
       {carrito.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-cream/10 bg-cream/5 p-8 text-center">
-          <Receipt className="mx-auto mb-3 text-cream/30" size={28} />
-          <p className="text-sm text-cream/50">Aún no has agregado productos a tu cuenta.</p>
-          <Link href="/menu" className="mt-4 inline-block text-sm font-semibold text-gold underline">
-            Ver menú
-          </Link>
+        <div className="mt-10 rounded-2xl border border-stone-line bg-white p-8 text-center shadow-silk">
+          <Receipt className="mx-auto mb-3 text-graphite/25" size={28} />
+          <p className="text-sm text-graphite/50">Aún no tienes productos en tu cuenta.</p>
         </div>
       ) : (
         <>
-          <div className="mt-6 divide-y divide-cream/10 rounded-2xl border border-cream/10 bg-cream/5">
+          <div className="mt-6 divide-y divide-stone-line rounded-2xl border border-stone-line bg-white shadow-silk">
             {carrito.map((item) => (
               <div key={item.platilloId} className="flex items-center justify-between gap-3 px-4 py-3.5">
                 <div>
-                  <p className="text-sm font-medium text-cream">{item.nombre}</p>
-                  <p className="text-xs text-cream/40">{formatCurrency(item.precio)} c/u</p>
+                  <p className="text-sm font-medium text-graphite">{item.nombre}</p>
+                  <p className="text-xs text-graphite/40">{formatCurrency(item.precio)} c/u</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => cambiarCantidad(item.platilloId, -1)}
-                    className="flex h-7 w-7 items-center justify-center rounded-full border border-cream/15 text-cream/60 hover:bg-cream/10"
+                    className="flex h-7 w-7 items-center justify-center rounded-full border border-stone-line text-graphite/60 hover:bg-graphite/5"
                   >
                     <Minus size={12} />
                   </button>
-                  <span className="w-4 text-center text-sm">{item.cantidad}</span>
+                  <span className="w-4 text-center text-sm text-graphite">{item.cantidad}</span>
                   <button
                     onClick={() => cambiarCantidad(item.platilloId, 1)}
-                    className="flex h-7 w-7 items-center justify-center rounded-full border border-cream/15 text-cream/60 hover:bg-cream/10"
+                    className="flex h-7 w-7 items-center justify-center rounded-full border border-stone-line text-graphite/60 hover:bg-graphite/5"
                   >
                     <Plus size={12} />
                   </button>
-                  <span className="ml-2 w-16 text-right text-sm font-semibold text-cream">
+                  <span className="ml-2 w-16 text-right text-sm font-semibold text-graphite">
                     {formatCurrency(item.precio * item.cantidad)}
                   </span>
                   <button
                     onClick={() => quitarDelCarrito(item.platilloId)}
-                    className="ml-1 text-cream/30 hover:text-wine"
+                    className="ml-1 text-graphite/30 hover:text-wine"
                   >
                     <Trash2 size={14} />
                   </button>
@@ -102,34 +99,36 @@ export default function CuentaPage() {
             ))}
           </div>
 
-          <div className="mt-6 space-y-2 rounded-2xl border border-cream/10 bg-cream/5 p-5 text-sm">
-            <div className="flex justify-between text-cream/60">
+          <div className="mt-6 space-y-2 rounded-2xl border border-stone-line bg-white p-5 text-sm shadow-silk">
+            <div className="flex justify-between text-graphite/55">
               <span>Subtotal</span>
               <span>{formatCurrency(subtotal)}</span>
             </div>
-            <div className="flex justify-between text-cream/60">
+            <div className="flex justify-between text-graphite/55">
               <span>IVA (16%)</span>
               <span>{formatCurrency(iva)}</span>
             </div>
-            <div className="flex justify-between text-cream/60">
+            <div className="flex justify-between text-graphite/55">
               <span>Propina</span>
               <span>{formatCurrency(montoPropina)}</span>
             </div>
-            <div className="flex justify-between border-t border-cream/10 pt-2 font-serif text-lg text-gold">
+            <div className="flex justify-between border-t border-stone-line pt-2 font-serif text-lg text-graphite">
               <span>Total</span>
               <span>{formatCurrency(total)}</span>
             </div>
           </div>
 
           <div className="mt-5">
-            <p className="mb-2 text-sm font-semibold text-cream/70">Propina</p>
+            <p className="mb-2 text-sm font-semibold text-graphite/70">Propina</p>
             <div className="flex flex-wrap gap-2">
               {propinas.map((p) => (
                 <button
                   key={p}
                   onClick={() => setPropina(p)}
                   className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
-                    propina === p ? "border-gold bg-gold/15 text-gold" : "border-cream/15 text-cream/60"
+                    propina === p
+                      ? "border-graphite bg-graphite text-ivory"
+                      : "border-stone-line bg-white text-graphite/55"
                   }`}
                 >
                   {p}%
@@ -138,7 +137,9 @@ export default function CuentaPage() {
               <button
                 onClick={() => setPropina("otra")}
                 className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
-                  propina === "otra" ? "border-gold bg-gold/15 text-gold" : "border-cream/15 text-cream/60"
+                  propina === "otra"
+                    ? "border-graphite bg-graphite text-ivory"
+                    : "border-stone-line bg-white text-graphite/55"
                 }`}
               >
                 Otra cantidad
@@ -151,20 +152,20 @@ export default function CuentaPage() {
                 value={propinaManual}
                 onChange={(e) => setPropinaManual(Number(e.target.value))}
                 placeholder="Monto de propina"
-                className="mt-3 w-full rounded-xl border border-cream/10 bg-cream/5 px-4 py-3 text-sm text-cream placeholder:text-cream/30 focus:border-gold/50 focus:outline-none"
+                className="mt-3 w-full rounded-xl border border-stone-line bg-white px-4 py-3 text-sm text-graphite placeholder:text-graphite/30 focus:border-champagne focus:outline-none"
               />
             )}
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <Button variant="outline" onClick={solicitarCuenta} disabled={cuentaSolicitada}>
+            <Button variant="outlineLight" onClick={solicitarCuenta} disabled={cuentaSolicitada}>
               {cuentaSolicitada ? "Cuenta solicitada ✓" : "Solicitar cuenta"}
             </Button>
-            <Button variant="outline" onClick={() => router.push(`/mesa/${mesa.id}/dividir`)}>
+            <Button variant="outlineLight" onClick={() => router.push(`/mesa/${mesa.id}/dividir`)}>
               Dividir cuenta
             </Button>
           </div>
-          <Button fullWidth size="lg" className="mt-3" onClick={() => setPagado(true)}>
+          <Button variant="noir" fullWidth size="lg" className="mt-3" onClick={() => setPagado(true)}>
             Pagar {formatCurrency(total)}
           </Button>
         </>

@@ -13,14 +13,14 @@ html {
 }
 
 body {
-  background-color: #15120F;
-  color: #F6F1E7;
+  background-color: #FBFAF8;
+  color: #1C1B19;
   overscroll-behavior-y: none;
 }
 
 ::selection {
-  background-color: #C6A15B;
-  color: #15120F;
+  background-color: #C9A96A;
+  color: #FBFAF8;
 }
 
 /* Hide scrollbar for horizontally scrolling chip rows / carousels */
@@ -40,12 +40,19 @@ body {
 }
 
 .bg-grain {
-  background-image: radial-gradient(circle at 1px 1px, rgba(246,241,231,0.035) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(28,27,25,0.035) 1px, transparent 0);
   background-size: 3px 3px;
 }
 
 .text-gradient-gold {
   background: linear-gradient(120deg, #D8BE8B, #C6A15B 40%, #F0DDAF 60%, #C6A15B);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-champagne {
+  background: linear-gradient(120deg, #B9985F, #C9A96A 45%, #E3D4B4 65%, #B9985F);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -57,9 +64,26 @@ body {
   -webkit-backdrop-filter: blur(16px);
 }
 
+/* Premium White Restaurant App — customer-facing surface classes */
+.glass-ivory {
+  background: rgba(251, 250, 248, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
 .card-premium {
   background: linear-gradient(165deg, rgba(246,241,231,0.06), rgba(246,241,231,0.02));
   border: 1px solid rgba(246,241,231,0.08);
+}
+
+.card-silk {
+  background: #FFFFFF;
+  border: 1px solid #ECE7DC;
+  box-shadow: 0 2px 10px -4px rgba(28,27,25,0.06), 0 16px 40px -24px rgba(28,27,25,0.12);
+}
+
+.hairline {
+  border-color: #EAE4D8;
 }
 
 @keyframes pulse-soft {
@@ -68,4 +92,13 @@ body {
 }
 .animate-pulse-soft {
   animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes count-tick {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.animate-count-tick {
+  animation: count-tick 0.5s cubic-bezier(0.22,1,0.36,1);
 }

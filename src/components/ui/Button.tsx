@@ -4,7 +4,17 @@ import { motion, type HTMLMotionProps } from "framer-motion";
 import { clsx } from "clsx";
 import React from "react";
 
-type Variant = "primary" | "secondary" | "ghost" | "outline" | "wine";
+type Variant =
+  | "primary"
+  | "secondary"
+  | "ghost"
+  | "outline"
+  | "wine"
+  // Premium White Restaurant App variants (customer-facing redesign)
+  | "noir"
+  | "champagne"
+  | "outlineLight"
+  | "ghostLight";
 type Size = "sm" | "md" | "lg";
 
 type ButtonProps = HTMLMotionProps<"button"> & {
@@ -19,6 +29,10 @@ const variants: Record<Variant, string> = {
   wine: "bg-wine text-cream hover:bg-wine-light",
   outline: "border border-cream/25 text-cream hover:border-gold/60 hover:text-gold",
   ghost: "text-cream/80 hover:text-gold hover:bg-cream/5",
+  noir: "bg-graphite text-ivory hover:bg-graphite-soft shadow-silk",
+  champagne: "bg-champagne text-graphite hover:bg-champagne-soft shadow-champagneGlow",
+  outlineLight: "border border-graphite/15 text-graphite hover:border-champagne hover:bg-champagne/5",
+  ghostLight: "text-graphite/70 hover:text-graphite hover:bg-graphite/5",
 };
 
 const sizes: Record<Size, string> = {

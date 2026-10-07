@@ -1,12 +1,12 @@
 # Bistró Mecha — Plataforma Digital de Experiencia (Prototipo)
 
-> **Aviso importante.** Este repositorio es un **prototipo conceptual no oficial**, desarrollado
-> como propuesta tecnológica para un restaurante ficticio/ejemplo llamado "Bistró Mecha" en
-> Toluca, Estado de México. **No existe autorización de ninguna marca real.** No se utilizan
-> logotipos oficiales ni fotografías propietarias: todas las imágenes son fotografía genérica de
-> stock (Unsplash) usada como placeholder elegante, y los datos de contacto, ubicación, redes
-> sociales y menú son **ficticios/demostrativos**. Antes de cualquier uso comercial o público,
-> estos elementos deben validarse y sustituirse por información real y autorizada del
+> **Aviso importante.** Este repositorio es un **prototipo/pitch no oficial**, desarrollado como
+> propuesta tecnológica para presentarle a **Bistró Mecha** (bistromecha.com.mx), restaurante real
+> en Toluca, Estado de México. **Aún no existe un acuerdo formal con el negocio.** Dirección,
+> teléfonos, WhatsApp, Instagram y algunos nombres/descripciones de platillos destacados se
+> tomaron de su sitio público para que el pitch se sienta real; precios de menú, fotografías
+> (stock de Unsplash como placeholder) y el logotipo siguen siendo **demostrativos**. Antes de
+> cualquier uso comercial o público real, todo debe validarse y autorizarse directamente con el
 > establecimiento.
 
 ## Qué es esto

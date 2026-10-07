@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
 import { useApp } from "@/lib/store";
 
+// La Carta no se muestra en la navegación (sin referencias visibles por ahora).
 const items = [
   { href: "/", label: "Inicio" },
-  { href: "/menu", label: "Menú" },
   { href: "/reservar", label: "Reservar" },
   { href: "/eventos", label: "Eventos" },
   { href: "/mesa", label: "Mi mesa" },
@@ -21,10 +21,10 @@ export function Navbar() {
   if (pathname.startsWith("/admin")) return null;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-30 hidden border-b border-cream/10 bg-carbon/80 backdrop-blur-xl md:block">
+    <header className="fixed inset-x-0 top-0 z-30 hidden border-b border-stone-line bg-ivory/85 backdrop-blur-xl md:block">
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-8">
-        <Link href="/" className="font-serif text-2xl tracking-wide text-cream">
-          Bistró <span className="text-gradient-gold">Mecha</span>
+        <Link href="/" className="font-serif text-2xl tracking-wide text-graphite">
+          Bistró <span className="text-gradient-champagne">Mecha</span>
         </Link>
         <nav className="flex items-center gap-8">
           {items.map(({ href, label }) => {
@@ -36,25 +36,19 @@ export function Navbar() {
                 href={target}
                 className={clsx(
                   "relative text-sm font-medium tracking-wide transition-colors",
-                  active ? "text-gold" : "text-cream/70 hover:text-cream"
+                  active ? "text-graphite" : "text-graphite/50 hover:text-graphite"
                 )}
               >
                 {label}
-                {active && <span className="absolute -bottom-2 left-0 h-px w-full bg-gold" />}
+                {active && <span className="absolute -bottom-2 left-0 h-px w-full bg-champagne" />}
               </Link>
             );
           })}
         </nav>
         <div className="flex items-center gap-3">
           <Link
-            href="/cuenta"
-            className="rounded-full border border-cream/20 px-4 py-2 text-sm font-medium text-cream/90 transition hover:border-gold/50 hover:text-gold"
-          >
-            Mi cuenta
-          </Link>
-          <Link
             href="/reservar"
-            className="rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-carbon shadow-glow transition hover:bg-gold-soft"
+            className="rounded-full bg-graphite px-5 py-2.5 text-sm font-semibold text-ivory shadow-silk transition hover:bg-graphite-soft"
           >
             Reservar mesa
           </Link>

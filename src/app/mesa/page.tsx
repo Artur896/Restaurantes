@@ -11,10 +11,10 @@ export default function MesaLandingPage() {
   if (mesaId) {
     return (
       <div className="mx-auto flex max-w-md flex-col items-center px-5 pt-24 text-center">
-        <p className="text-sm text-cream/50">Ya tienes una mesa activa.</p>
+        <p className="text-sm text-graphite/50">Ya tienes una mesa activa.</p>
         <Link
           href={`/mesa/${mesaId}`}
-          className="mt-4 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-carbon shadow-glow"
+          className="mt-4 rounded-full bg-graphite px-6 py-3 text-sm font-semibold text-ivory shadow-silk"
         >
           Ir a mi mesa
         </Link>
@@ -24,11 +24,11 @@ export default function MesaLandingPage() {
 
   return (
     <div className="mx-auto max-w-md px-5 pb-20 pt-16 text-center">
-      <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gold/15 text-gold">
+      <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-champagne/12 text-champagne">
         <ScanLine size={28} />
       </span>
-      <h1 className="mt-5 font-serif text-3xl text-cream">Escanea el QR de tu mesa</h1>
-      <p className="mt-2 text-sm text-cream/55">
+      <h1 className="mt-5 font-serif text-3xl text-graphite">Escanea el QR de tu mesa</h1>
+      <p className="mt-2 text-sm text-graphite/50">
         Cada mesa de Bistró Mecha tiene un código QR único. Escanéalo con tu cámara para abrir tu experiencia
         digital. Para esta demostración, elige una mesa manualmente:
       </p>
@@ -38,7 +38,7 @@ export default function MesaLandingPage() {
           <Link
             key={m.id}
             href={`/mesa/${m.id}`}
-            className="flex flex-col items-center gap-1 rounded-2xl border border-cream/10 bg-cream/5 py-3 text-cream/70 transition hover:border-gold/40 hover:text-gold"
+            className="flex flex-col items-center gap-1 rounded-2xl border border-stone-line bg-white py-3 text-graphite/60 shadow-silk transition hover:border-champagne/50 hover:text-champagne"
           >
             <QrCode size={16} />
             <span className="text-xs font-semibold">{m.numero}</span>

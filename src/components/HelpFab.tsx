@@ -41,13 +41,13 @@ export function HelpFab() {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         whileTap={{ scale: 0.92 }}
-        className="fixed bottom-24 right-4 z-20 flex items-center gap-2 rounded-full bg-wine px-4 py-3 text-sm font-semibold text-cream shadow-premium md:bottom-8 md:right-8"
+        className="fixed bottom-24 right-4 z-20 flex items-center gap-2 rounded-full bg-graphite px-4 py-3 text-sm font-semibold text-ivory shadow-silkLg md:bottom-8 md:right-8"
       >
         <ConciergeBell size={18} />
         <span className="hidden sm:inline">Necesito ayuda</span>
       </motion.button>
 
-      <BottomSheet open={open} onClose={cerrar} title={confirmado ? undefined : "¿Qué necesitas?"}>
+      <BottomSheet open={open} onClose={cerrar} title={confirmado ? undefined : "¿Qué necesitas?"} tone="light">
         <AnimatePresence mode="wait">
           {!confirmado ? (
             <motion.div
@@ -61,10 +61,10 @@ export function HelpFab() {
                 <button
                   key={tipo}
                   onClick={() => elegir(tipo)}
-                  className="flex flex-col items-center gap-2.5 rounded-2xl border border-cream/10 bg-cream/5 px-3 py-5 text-center transition hover:border-gold/40 hover:bg-cream/10 active:scale-95"
+                  className="flex flex-col items-center gap-2.5 rounded-2xl border border-stone-line bg-white px-3 py-5 text-center shadow-silk transition hover:border-champagne/50 active:scale-95"
                 >
-                  <Icon size={24} className="text-gold" />
-                  <span className="text-sm font-medium text-cream/90">{tipo}</span>
+                  <Icon size={24} className="text-champagne" />
+                  <span className="text-sm font-medium text-graphite">{tipo}</span>
                 </button>
               ))}
             </motion.div>
@@ -76,12 +76,12 @@ export function HelpFab() {
               exit={{ opacity: 0 }}
               className="flex flex-col items-center gap-4 py-6 text-center"
             >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gold/15">
-                <Check size={30} className="text-gold" />
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-champagne/15">
+                <Check size={30} className="text-champagne" />
               </span>
               <div>
-                <p className="font-serif text-xl text-cream">¡Solicitud enviada!</p>
-                <p className="mt-1 text-sm text-cream/60">
+                <p className="font-serif text-xl text-graphite">¡Solicitud enviada!</p>
+                <p className="mt-1 text-sm text-graphite/55">
                   Un miembro de nuestro equipo atenderá tu solicitud
                   {mesaInfo ? ` en la Mesa ${mesaInfo.numero}` : ""} en breve.
                 </p>

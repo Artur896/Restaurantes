@@ -3,31 +3,42 @@ import type {
   Platillo,
   Evento,
   Mesa,
+  EstadoMesa,
   Reservacion,
   Cliente,
   Notificacion,
 } from "./types";
 
+// Datos tomados de bistromecha.com.mx (sucursales, teléfonos, WhatsApp e Instagram
+// son reales y públicos). El horario es un estimado razonable: el sitio real no lo
+// publica, así que debe confirmarse directamente con el restaurante antes de usarse
+// en producción. Las coordenadas son aproximadas al centro de Toluca.
 export const SUCURSALES: Sucursal[] = [
   {
     id: "centro",
     nombre: "Centro Histórico",
-    direccion: "Av. Hidalgo Pte. 123, Centro",
+    direccion: "Aldama Norte 102, Col. Centro",
     ciudad: "Toluca, Estado de México",
-    telefono: "+52 722 000 0000",
-    whatsapp: "+52 722 000 0001",
-    horario: "Lun–Jue 9:00–23:00 · Vie–Sáb 9:00–01:00 · Dom 9:00–22:00",
+    telefono: "+52 722 490 5000",
+    whatsapp: "+52 729 135 8408",
+    horario: "Horario por confirmar",
+    idealPara: "Celebraciones, reuniones y música en vivo",
+    descriptor: "El corazón del Centro Histórico de Toluca",
+    resumen: "Una experiencia vibrante para celebrar, cantar, compartir y disfrutar nuestros espectáculos en vivo.",
     lat: 19.2926,
     lng: -99.6567,
   },
   {
     id: "primero-mayo",
     nombre: "Primero de Mayo",
-    direccion: "Blvd. Primero de Mayo 456, Zona Centro",
+    direccion: "Av. Primero de Mayo 517, Barrio de Santa Clara",
     ciudad: "Toluca, Estado de México",
-    telefono: "+52 722 000 0010",
-    whatsapp: "+52 722 000 0011",
-    horario: "Lun–Jue 9:00–23:00 · Vie–Sáb 9:00–01:00 · Dom 9:00–22:00",
+    telefono: "+52 722 318 4536",
+    whatsapp: "+52 729 135 8408",
+    horario: "Horario por confirmar",
+    idealPara: "Momentos íntimos, desayunos y cenas especiales",
+    descriptor: "Un espacio más íntimo para conectar",
+    resumen: "Una atmósfera cercana para desayunos, comidas, cenas, reuniones y momentos especiales en pareja.",
     lat: 19.288,
     lng: -99.654,
   },
@@ -71,10 +82,11 @@ export const PLATILLOS: Platillo[] = [
     sucursalIds: ["centro", "primero-mayo"],
   },
   {
+    // Nombre y descripción tomados del menú publicado en bistromecha.com.mx.
     id: "p4",
-    nombre: "Tiramisú",
-    descripcion: "Capas de mascarpone, café espresso y cacao amargo.",
-    ingredientes: ["Mascarpone", "Café espresso", "Soletas", "Cacao", "Huevo"],
+    nombre: "Strudel De Manzana c/Helado",
+    descripcion: "Postre austriaco relleno de compota de manzana, azúcar y canela, servido con helado.",
+    ingredientes: ["Manzana", "Canela", "Azúcar", "Pasta filo", "Helado de vainilla"],
     precio: 120,
     categoria: "Postres",
     imagen: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=1200&auto=format&fit=crop",
@@ -83,10 +95,12 @@ export const PLATILLOS: Platillo[] = [
     sucursalIds: ["centro", "primero-mayo"],
   },
   {
+    // Nombre y descripción tomados del menú publicado en bistromecha.com.mx.
     id: "p5",
-    nombre: "Huevos Benedictinos",
-    descripcion: "Muffin inglés, jamón serrano, huevo poché y salsa holandesa.",
-    ingredientes: ["Muffin inglés", "Jamón serrano", "Huevo", "Salsa holandesa"],
+    nombre: "Toast de Arrachera",
+    descripcion:
+      "Pan artesanal tostado con pulpa de aguacate, jugosa arrachera a la parrilla, jitomates cherry y brotes de cilantro.",
+    ingredientes: ["Pan artesanal", "Aguacate", "Arrachera", "Jitomate cherry", "Cilantro"],
     precio: 165,
     categoria: "Desayunos",
     imagen: "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?q=80&w=1200&auto=format&fit=crop",
@@ -128,6 +142,19 @@ export const PLATILLOS: Platillo[] = [
     imagen: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?q=80&w=1200&auto=format&fit=crop",
     etiquetas: ["Vegetariano", "Favorito"],
     disponible: false,
+    sucursalIds: ["centro", "primero-mayo"],
+  },
+  {
+    // Nombre y descripción tomados del menú publicado en bistromecha.com.mx.
+    id: "p14",
+    nombre: "Pizza Higo",
+    descripcion: "Pizza semidulce elaborada con higo en almíbar, jamón serrano, arúgula y reducción de balsámico.",
+    ingredientes: ["Higo en almíbar", "Jamón serrano", "Mozzarella", "Arúgula", "Reducción de balsámico"],
+    precio: 245,
+    categoria: "Pizzas",
+    imagen: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop",
+    etiquetas: ["Favorito"],
+    disponible: true,
     sucursalIds: ["centro", "primero-mayo"],
   },
   {
@@ -187,6 +214,19 @@ export const PLATILLOS: Platillo[] = [
     categoria: "Bebidas",
     imagen: "https://images.unsplash.com/photo-1523371683702-67ae9f447762?q=80&w=1200&auto=format&fit=crop",
     etiquetas: ["Vegano", "Sin gluten"],
+    disponible: true,
+    sucursalIds: ["centro", "primero-mayo"],
+  },
+  {
+    // Nombre y descripción tomados del menú publicado en bistromecha.com.mx.
+    id: "p15",
+    nombre: "Copa Clericot",
+    descripcion: "Nuestro delicioso clericot servido con frutos rojos.",
+    ingredientes: ["Vino tinto", "Frutos rojos", "Brandy", "Jugo de naranja"],
+    precio: 140,
+    categoria: "Cócteles",
+    imagen: "https://images.unsplash.com/photo-1609951651556-5334e2706168?q=80&w=1200&auto=format&fit=crop",
+    etiquetas: ["Favorito"],
     disponible: true,
     sucursalIds: ["centro", "primero-mayo"],
   },
@@ -417,6 +457,53 @@ export const HORARIOS_RESERVA = [
   { hora: "20:30", estado: "No disponible" as const },
   { hora: "21:00", estado: "Disponible" as const },
 ];
+
+/**
+ * Bloques de reservación de 2 horas. Cada reservación ocupa una mesa durante
+ * todo el bloque; al terminar, la mesa vuelve a estar disponible para el
+ * siguiente bloque (ver sección 6 del brief: disponibilidad = fecha + horario).
+ */
+export const BLOQUES_HORARIO: { inicio: string; fin: string }[] = [
+  { inicio: "13:00", fin: "15:00" },
+  { inicio: "15:00", fin: "17:00" },
+  { inicio: "17:00", fin: "19:00" },
+  { inicio: "19:00", fin: "21:00" },
+  { inicio: "21:00", fin: "23:00" },
+];
+
+function horaAMinutos(hora: string) {
+  const [h, m] = hora.split(":").map(Number);
+  return h * 60 + m;
+}
+
+/** Bloque de 2h al que pertenece una hora puntual, p. ej. una reservación existente a las 19:30. */
+export function bloqueDeHora(hora: string) {
+  const minutos = horaAMinutos(hora);
+  return BLOQUES_HORARIO.find((b) => minutos >= horaAMinutos(b.inicio) && minutos < horaAMinutos(b.fin));
+}
+
+/**
+ * Disponibilidad real de una mesa para una fecha + bloque de horario dados.
+ * "Bloqueada" es un estado permanente (mesa fuera de servicio); todo lo demás
+ * depende de si existe una reservación activa que se traslape con ese bloque.
+ */
+export function disponibilidadMesa(
+  mesa: Mesa,
+  fecha: string,
+  bloque: { inicio: string; fin: string }
+): EstadoMesa {
+  if (mesa.estado === "Bloqueada") return "Bloqueada";
+  const reservadaEnBloque = RESERVACIONES.some(
+    (r) =>
+      r.mesaId === mesa.id &&
+      r.fecha === fecha &&
+      r.estado !== "Cancelada" &&
+      r.estado !== "Finalizada" &&
+      bloqueDeHora(r.hora)?.inicio === bloque.inicio
+  );
+  if (reservadaEnBloque) return "Reservada";
+  return "Disponible";
+}
 
 export function eventoDeHoy(sucursalId?: string) {
   const fechaHoy = diasDesdeHoy(0);

@@ -28,9 +28,9 @@ export default function DividirCuentaPage() {
 
   return (
     <div className="mx-auto max-w-xl px-5 pb-20 pt-10 sm:px-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Mesa {mesa.numero}</p>
-      <h1 className="mt-1 font-serif text-4xl text-cream">¿Cómo quieres dividir tu cuenta?</h1>
-      <p className="mt-2 text-sm text-cream/55">Total de la cuenta: {formatCurrency(total)}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-champagne">Mesa {mesa.numero}</p>
+      <h1 className="mt-1 font-serif text-4xl text-graphite">¿Cómo quieres dividir tu cuenta?</h1>
+      <p className="mt-2 text-sm text-graphite/50">Total de la cuenta: {formatCurrency(total)}</p>
 
       <div className="mt-6 grid grid-cols-2 gap-3">
         <OptionCard active={modo === "mitad"} onClick={() => setModo("mitad")} icon={Equal} label="50% / 50%" />
@@ -55,7 +55,7 @@ export default function DividirCuentaPage() {
         key={modo}
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mt-8 rounded-2xl border border-gold/20 bg-gold/5 p-6"
+        className="mt-8 rounded-2xl border border-champagne/25 bg-champagne/5 p-6"
       >
         {modo === "mitad" && (
           <ResultadoSimple titulo="Cada quien paga" monto={total / 2} nota="50% / 50% del total" />
@@ -70,7 +70,7 @@ export default function DividirCuentaPage() {
         {modo === "todo" && <ResultadoSimple titulo="Pagas el total" monto={total} nota="Yo pago todo" />}
         {modo === "personalizado" && (
           <div>
-            <p className="mb-2 text-sm font-semibold text-cream/70">¿Cuánto quieres pagar?</p>
+            <p className="mb-2 text-sm font-semibold text-graphite/70">¿Cuánto quieres pagar?</p>
             <input
               type="number"
               min={0}
@@ -78,18 +78,18 @@ export default function DividirCuentaPage() {
               value={personalizado}
               onChange={(e) => setPersonalizado(Number(e.target.value))}
               placeholder="$0"
-              className="w-full rounded-xl border border-cream/10 bg-cream/5 px-4 py-3 text-lg text-cream placeholder:text-cream/30 focus:border-gold/50 focus:outline-none"
+              className="w-full rounded-xl border border-stone-line bg-white px-4 py-3 text-lg text-graphite placeholder:text-graphite/30 focus:border-champagne focus:outline-none"
             />
-            <p className="mt-2 text-xs text-cream/40">
+            <p className="mt-2 text-xs text-graphite/40">
               Restante: {formatCurrency(Math.max(0, total - personalizado))}
             </p>
           </div>
         )}
         {modo === "productos" && (
           <div>
-            <p className="mb-3 text-sm font-semibold text-cream/70">Selecciona lo que vas a pagar</p>
+            <p className="mb-3 text-sm font-semibold text-graphite/70">Selecciona lo que vas a pagar</p>
             {carrito.length === 0 ? (
-              <p className="text-sm text-cream/40">No hay productos en la cuenta todavía.</p>
+              <p className="text-sm text-graphite/40">No hay productos en la cuenta todavía.</p>
             ) : (
               <SeleccionProductos />
             )}
@@ -97,7 +97,7 @@ export default function DividirCuentaPage() {
         )}
       </motion.div>
 
-      <Button fullWidth size="lg" className="mt-6">
+      <Button variant="noir" fullWidth size="lg" className="mt-6">
         Confirmar división
       </Button>
     </div>
@@ -119,12 +119,12 @@ function OptionCard({
     <button
       onClick={onClick}
       className={clsx(
-        "flex flex-col items-center gap-2.5 rounded-2xl border px-3 py-5 text-center transition active:scale-95",
-        active ? "border-gold bg-gold/10" : "border-cream/10 bg-cream/5 hover:border-cream/25"
+        "flex flex-col items-center gap-2.5 rounded-2xl border px-3 py-5 text-center shadow-silk transition active:scale-95",
+        active ? "border-graphite bg-graphite" : "border-stone-line bg-white hover:border-champagne/50"
       )}
     >
-      <Icon size={22} className={active ? "text-gold" : "text-cream/60"} />
-      <span className="text-sm font-medium text-cream">{label}</span>
+      <Icon size={22} className={active ? "text-champagne" : "text-graphite/55"} />
+      <span className={clsx("text-sm font-medium", active ? "text-ivory" : "text-graphite")}>{label}</span>
     </button>
   );
 }
@@ -132,9 +132,9 @@ function OptionCard({
 function ResultadoSimple({ titulo, monto, nota }: { titulo: string; monto: number; nota: string }) {
   return (
     <div className="text-center">
-      <p className="text-sm text-cream/60">{titulo}</p>
-      <p className="mt-1 font-serif text-4xl text-gold">{formatCurrency(monto)}</p>
-      <p className="mt-1 text-xs text-cream/40">{nota}</p>
+      <p className="text-sm text-graphite/55">{titulo}</p>
+      <p className="mt-1 font-serif text-4xl text-graphite">{formatCurrency(monto)}</p>
+      <p className="mt-1 text-xs text-graphite/40">{nota}</p>
     </div>
   );
 }
@@ -158,22 +158,22 @@ function SeleccionProductos() {
         {carrito.map((item) => (
           <label
             key={item.platilloId}
-            className="flex cursor-pointer items-center justify-between rounded-xl border border-cream/10 bg-cream/5 px-3.5 py-2.5 text-sm"
+            className="flex cursor-pointer items-center justify-between rounded-xl border border-stone-line bg-white px-3.5 py-2.5 text-sm"
           >
-            <span className="flex items-center gap-2.5">
+            <span className="flex items-center gap-2.5 text-graphite">
               <input
                 type="checkbox"
                 checked={seleccion.includes(item.platilloId)}
                 onChange={() => toggle(item.platilloId)}
-                className="h-4 w-4 accent-[#C6A15B]"
+                className="h-4 w-4 accent-[#C9A96A]"
               />
               {item.nombre} ×{item.cantidad}
             </span>
-            <span className="text-cream/60">{formatCurrency(item.precio * item.cantidad)}</span>
+            <span className="text-graphite/55">{formatCurrency(item.precio * item.cantidad)}</span>
           </label>
         ))}
       </div>
-      <p className="mt-3 text-right font-serif text-xl text-gold">{formatCurrency(total)}</p>
+      <p className="mt-3 text-right font-serif text-xl text-graphite">{formatCurrency(total)}</p>
     </div>
   );
 }

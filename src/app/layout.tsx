@@ -6,6 +6,8 @@ import { Navbar } from "@/components/nav/Navbar";
 import { BottomNav } from "@/components/nav/BottomNav";
 import { HelpFab } from "@/components/HelpFab";
 import { PwaRegister } from "@/components/PwaRegister";
+import { Footer } from "@/components/Footer";
+import { PageTransition } from "@/components/PageTransition";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -38,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#15120F",
+  themeColor: "#FBFAF8",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -48,12 +50,15 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es-MX" className={`${playfair.variable} ${inter.variable}`}>
-      <body className="bg-carbon font-sans antialiased bg-grain">
+      <body className="bg-ivory font-sans text-graphite antialiased bg-grain">
         <AppProvider>
           <PwaRegister />
           <Navbar />
           <HelpFab />
-          <main className="min-h-dvh pb-24 pt-0 md:pb-0 md:pt-20">{children}</main>
+          <main className="min-h-dvh pb-24 pt-0 md:pb-0 md:pt-20">
+            <PageTransition>{children}</PageTransition>
+            <Footer />
+          </main>
           <BottomNav />
         </AppProvider>
       </body>
